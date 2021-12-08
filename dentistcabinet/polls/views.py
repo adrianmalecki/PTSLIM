@@ -1,29 +1,54 @@
 from django.http import HttpResponse
-from .models import Appointment, Doctor, Patient, Personaldata, Reservation
-from rest_framework import viewsets
-from .serializer import AppointmentSerializer, DoctorSerializer, PatientSerializer, ReservationSerializer, PersonaldataSerializer
+from .models import Doctor, Patient, Personaldata, Reservation
+from rest_framework import viewsets, generics, permissions
+from .serializer import DoctorSerializer, PatientSerializer, ReservationSerializer, \
+    PersonaldataSerializer
+from rest_framework.permissions import AllowAny
 
 
-class AppointmentViewSet(viewsets.ModelViewSet):
-    queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
 
-
-class DoctorViewSet(viewsets.ModelViewSet):
-    queryset = Doctor.objects.all()
-    serializer_class = DoctorSerializer
-
-
-class PatientViewSet(viewsets.ModelViewSet):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-
-
-class PersonaldataViewSet(viewsets.ModelViewSet):
+class CreatePersonalDataView(generics.ListCreateAPIView):
     queryset = Personaldata.objects.all()
     serializer_class = PersonaldataSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
 
 
-class ReservationViewSet(viewsets.ModelViewSet):
+class PersonalDataDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Personaldata.objects.all()
+    serializer_class = PersonaldataSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+
+class CreatePatientView(generics.ListCreateAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+
+class PatientDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+
+class CreateDoctorView(generics.ListCreateAPIView):
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+
+class DoctorDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+class CreateReservationView(generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))
+
+
+class ReservationDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+    #permission_classes = (permissions.IsAuthenticated, IsOwner))

@@ -1,16 +1,20 @@
 from django.urls import path
 from rest_framework import  routers
 from django.urls import  include, path
-from .views import AppointmentViewSet, DoctorViewSet, PatientViewSet, ReservationViewSet, PersonaldataViewSet
-
-router = routers.DefaultRouter()
-router.register(r'Appointment', AppointmentViewSet)
-router.register(r'reservations', ReservationViewSet)
-router.register(r'doctors', DoctorViewSet)
-router.register(r'patients', PatientViewSet)
-router.register(r'personaldatas', PersonaldataViewSet)
+from django.conf.urls import url
+from .views import CreatePersonalDataView, PersonalDataDetailsView, CreatePatientView, CreateDoctorView, \
+    CreateReservationView, PatientDetailsView, DoctorDetailsView, ReservationDetailsView
 
 urlpatterns = [
-    path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^personaldata/$', CreatePersonalDataView.as_view(), name="create"),
+    url(r'^personaldata/(?P<pk>[0-9]+)/$', PersonalDataDetailsView.as_view(), name="details"),
+
+    url(r'^personaldata/$', CreatePatientView.as_view(), name="create"),
+    url(r'^personaldata/(?P<pk>[0-9]+)/$', PatientDetailsView.as_view(), name="details"),
+
+    url(r'^personaldata/$', CreateDoctorView.as_view(), name="create"),
+    url(r'^personaldata/(?P<pk>[0-9]+)/$', DoctorDetailsView.as_view(), name="details"),
+
+    url(r'^personaldata/$', CreateReservationView.as_view(), name="create"),
+    url(r'^personaldata/(?P<pk>[0-9]+)/$', ReservationDetailsView.as_view(), name="details"),
 ]
